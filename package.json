@@ -8,7 +8,5 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "dependencies": {
-    "solc": "^0.5.1"
-  }
+  "dependencies": {}
 }
