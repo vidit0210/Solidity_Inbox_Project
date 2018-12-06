@@ -10,13 +10,15 @@ const { interface, bytecode } = require('../compile');
  
 let accounts;
 let inbox;
+
+const INITIAL_MESSAGE ='Vidit';
  
 beforeEach(async () => {
   // Get a list of all accounts
   accounts = await web3.eth.getAccounts();
   // Use one of those accounts to deploy the contract
   inbox = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: ['Hi there!'] })
+    .deploy({ data: bytecode, arguments: [INITIAL_MESSAGE] })
     .send({ from: accounts[0], gas: '1000000' });
     
   // ADD THIS ONE LINE RIGHT HERE!!!!! <---------------------
@@ -27,8 +29,9 @@ describe('Inbox', () => {
   it('deploys a contract', () => {
     assert.ok(inbox.options.address);
   });
-  it('has a default message', async () => {
-    const message = await inbox.methods.message().call();
-    assert.equal(message, 'Hi there!');
-  });
+  it('has Default message',async ()=>{
+      const message = await inbox.methods.message().call();
+      assert.equal(message,INITIAL_MESSAGE);
+      //console.log(message);
+  })
 });
